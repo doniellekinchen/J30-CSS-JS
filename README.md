@@ -10,4 +10,3 @@ JavaScript Modifications: The JavaScript was modified to handle the new box-shad
 
 Enhanced CSS Code Display: The CSS code display area now shows all CSS variable values, allowing users to see the updated CSS code reflecting their changes.
 
-These changes enable users to dynamically adjust the box-shadow effect on the image using range sliders and view the corresponding CSS code in real-time.
