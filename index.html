@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scoped CSS Variables and JS</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+<body>
+  <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
+
+  <div class="controls">
+    <label for="spacing">Spacing:</label>
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+    <label for="blur">Blur:</label>
+    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+
+    <label for="base">Base Color</label>
+    <input id="base" type="color" name="base" value="#ffc600">
+
+    <!-- Add box-shadow controls -->
+    <label for="shadow-h">Horizontal Shadow:</label>
+    <input id="shadow-h" type="range" name="shadow-h" min="-50" max="50" value="10" data-sizing="px">
+    
+    <label for="shadow-v">Vertical Shadow:</label>
+    <input id="shadow-v" type="range" name="shadow-v" min="-50" max="50" value="10" data-sizing="px">
+    
+    <label for="shadow-blur">Blur Radius:</label>
+    <input id="shadow-blur" type="range" name="shadow-blur" min="0" max="25" value="10" data-sizing="px">
+    
+    <label for="shadow-spread">Spread Radius:</label>
+    <input id="shadow-spread" type="range" name="shadow-spread" min="0" max="50" value="10" data-sizing="px">
+
+    <!-- Add file upload input -->
+    <label for="file">Upload Image:</label>
+    <input id="file" type="file" name="file">
+  </div>
+
+  <!-- Container for the image -->
+  <div class="image-container">
+    <img id="uploaded-image" src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+  </div>
+
+  <!-- CSS code display area -->
+  <textarea id="css-code" rows="10" cols="50" readonly></textarea>
+
+  <style>
+    :root {
+        --base: #ffc600;
+        --spacing: 10px;
+        --blur: 10px;
+        --shadow-h: 10px;
+        --shadow-v: 10px;
+        --shadow-blur: 10px;
+        --shadow-spread: 10px;
+    }
+
+    img {
+        padding: var(--spacing);
+        background: var(--base);
+        filter: blur(var(--blur));
+        box-shadow: 
+          var(--shadow-h) var(--shadow-v) var(--shadow-blur) var(--shadow-spread) rgba(0, 0, 0, 0.5);
+    }
+
+    body {
+      text-align: center;
+      background: #fff;
+      color: #000;
+      font-family: 'helvetica neue', sans-serif;
+      font-weight: 100;
+      font-size: 45px;
+    }
+
+    .controls {
+      margin-bottom: 50px;
+    }
+
+    input {
+      width: 100px;
+    }
+  </style>
+
+  <script>
+    const inputs = document.querySelectorAll('.controls input');
+    const uploadedImage = document.getElementById('uploaded-image');
+    const cssCodeTextarea = document.getElementById('css-code');
+    
+    function handleUpdate() {
+      const suffix = this.dataset.sizing || '';
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+      updateCSSCode();
+    }
+
+    function handleFileUpload() {
+      const file = this.files[0]; // Get the uploaded file
+      const reader = new FileReader();
+
+      // Load the uploaded image
+      reader.onload = function(event) {
+        uploadedImage.src = event.target.result; // Set the src attribute of the image
+        updateCSSCode();
+      };
+
+      // Read the uploaded file as a data URL
+      reader.readAsDataURL(file);
+    }
+
+    function updateCSSCode() {
+      const spacing = document.getElementById('spacing').value;
+      const blur = document.getElementById('blur').value;
+      const base = document.getElementById('base').value;
+      const shadowH = document.getElementById('shadow-h').value;
+      const shadowV = document.getElementById('shadow-v').value;
+      const shadowBlur = document.getElementById('shadow-blur').value;
+      const shadowSpread = document.getElementById('shadow-spread').value;
+      
+      const boxShadowValue = `${shadowH}px ${shadowV}px ${shadowBlur}px ${shadowSpread}px rgba(0, 0, 0, 0.5)`; // Box-shadow value
+      
+      cssCodeTextarea.value = `
+        :root {
+          --base: ${base};
+          --spacing: ${spacing}px;
+          --blur: ${blur}px;
+          --shadow-h: ${shadowH}px;
+          --shadow-v: ${shadowV}px;
+          --shadow-blur: ${shadowBlur}px;
+          --shadow-spread: ${shadowSpread}px;
+        }
+        
+        img {
+          padding: var(--spacing);
+          background: var(--base);
+          filter: blur(var(--blur));
+          box-shadow: ${boxShadowValue};
+        }
+      `;
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+
+    const fileInput = document.getElementById('file');
+    fileInput.addEventListener('change', handleFileUpload);
+  </script>
+
+</body>
+</html>
