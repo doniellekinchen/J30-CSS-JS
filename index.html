@@ -9,6 +9,12 @@
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
 
   <div class="controls">
+      <!-- Added file upload input -->
+    <label for="file">Upload Image:</label>
+    <input id="file" type="file" name="file">
+    
+    <hr/>
+    
     <label for="spacing">Spacing:</label>
     <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
 
@@ -18,12 +24,14 @@
     <label for="base">Base Color</label>
     <input id="base" type="color" name="base" value="#ffc600">
 
-    <!-- Add box-shadow controls -->
+    <!-- Added box-shadow controls -->
     <label for="shadow-h">Horizontal Shadow:</label>
     <input id="shadow-h" type="range" name="shadow-h" min="-50" max="50" value="10" data-sizing="px">
     
     <label for="shadow-v">Vertical Shadow:</label>
     <input id="shadow-v" type="range" name="shadow-v" min="-50" max="50" value="10" data-sizing="px">
+    
+    <br>
     
     <label for="shadow-blur">Blur Radius:</label>
     <input id="shadow-blur" type="range" name="shadow-blur" min="0" max="25" value="10" data-sizing="px">
@@ -31,12 +39,10 @@
     <label for="shadow-spread">Spread Radius:</label>
     <input id="shadow-spread" type="range" name="shadow-spread" min="0" max="50" value="10" data-sizing="px">
 
-    <!-- Add file upload input -->
-    <label for="file">Upload Image:</label>
-    <input id="file" type="file" name="file">
+  
   </div>
 
-  <!-- Container for the image -->
+  <!-- Added Container for the image -->
   <div class="image-container">
     <img id="uploaded-image" src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
   </div>
@@ -69,7 +75,7 @@
       color: #000;
       font-family: 'helvetica neue', sans-serif;
       font-weight: 100;
-      font-size: 45px;
+      font-size: 40px;
     }
 
     .controls {
